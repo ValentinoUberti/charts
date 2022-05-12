@@ -1,0 +1,58 @@
+replicaCount: 1
+
+image:
+  registry: quay.io
+  repository: vshn/signalilo
+  tag: v0.10.0
+  pullPolicy: IfNotPresent
+  # username:
+  # password:
+  # existingPullSecret: my-image-pull-secret
+
+#nameOverride: "mylilo"
+fullnameOverride: "signalilo"
+
+# Required configuration
+config:
+   uuid: 9ec06d59-aa0c-4434-b5e2-1aeaf93cd928
+   icinga_hostname: api.ocphub.lab.seeweb
+   icinga_url: https://icinga2.lab.seeweb:5665
+   icinga_username: root
+   icinga_password: "57d1002d81b69197"
+   alertmanager_port: 8888
+   alertmanager_bearer_token: abcd
+  
+
+ # Optional extra configuration
+extraEnvVars:
+- name: SIGNALILO_LOG_LEVEL
+  value: "2"
+- name: SIGNALILO_ICINGA_INSECURE_TLS
+  value: "true"
+- name: SIGNALILO_ICINGA_DEBUG
+  value: "true"
+- name: SIGNALILO_ICINGA_GC_INTERVAL
+  value: "15m"
+- name: SIGNALILO_ICINGA_HEARTBEAT_INTERVAL
+  value: "60s"
+- name: SIGNALILO_ICINGA_KEEP_FOR
+  value: "2h"
+ 
+securityContext:
+  enabled: false
+  runAsUser: 999
+  fsGroup: 999
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
